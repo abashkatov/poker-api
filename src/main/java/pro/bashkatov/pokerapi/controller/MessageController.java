@@ -13,6 +13,6 @@ public class MessageController {
     @MessageMapping("/message")
     @SendTo("/topic/chat")
     public MessageDto greeting(@Payload MessageDto message) throws Exception {
-        return new MessageDto("Backend", "Сам ты " + message.getMessage());
+        return message;
     }
 }
