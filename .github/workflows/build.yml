@@ -4,9 +4,10 @@ on:
   release:
     types:
       - created
+
 jobs:
   build:
-    name: Create Release
+    name: Deploy Release
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
@@ -26,13 +27,14 @@ jobs:
         with:
           source: "./build/libs/*"
           target: ${{ secrets.DEPLOY_PATH }}/${{ github.event.release.tag_name }}
+          strip_components: 2
       - name: Add link and restart service
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.SSHKEY }}
           port: 22
           script: |
-            ln -s ${{ secrets.DEPLOY_PATH }}/${{ github.event.release.tag_name }} ${{ secrets.DEPLOY_PATH }}/current
+            ln -nsf ${{ secrets.DEPLOY_PATH }}/${{ github.event.release.tag_name }} ${{ secrets.DEPLOY_PATH }}/current
             systemctl restart poker-api.service
