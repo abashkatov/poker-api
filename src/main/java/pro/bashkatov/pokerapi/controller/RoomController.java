@@ -26,4 +26,10 @@ public class RoomController {
     public RoomTopicDto topicChanged(@Payload RoomTopicDto roomTopicDto) {
         return roomTopicDto;
     }
+
+    @MessageMapping("/room/i-left")
+    @SendTo("/topic/room/i-left")
+    public UserDto iLeft(@Payload UserDto userDto) {
+        return userDto;
+    }
 }
