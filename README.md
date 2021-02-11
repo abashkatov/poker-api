@@ -9,6 +9,7 @@
 - /app/room/im-here `{name}`
 - /app/room/im-here-too `{name}`
 - /app/room/topic-changed `{title}`
+- /app/room/i-left `{name}`
 
 ## generated events
 
@@ -19,3 +20,4 @@
 - /topic/room/im-here `{name}`
 - /topic/room/im-here-too `{name}`
 - /topic/room/topic-changed `{title}`
+- /topic/room/i-left `{name}`
