@@ -26,4 +26,4 @@
 - /topic/room/i-left `{name}`
 - /topic/room/i-voted `{name}`
 - /topic/room/open-cards 
-- /topic/room/my-score `{name}`
+- /topic/room/my-score `{name, score}`
