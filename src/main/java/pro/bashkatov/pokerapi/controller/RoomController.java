@@ -4,6 +4,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import pro.bashkatov.pokerapi.model.room.dto.EmptyResponse;
 import pro.bashkatov.pokerapi.model.room.dto.RoomTopicDto;
 import pro.bashkatov.pokerapi.model.room.dto.ScoreDto;
 import pro.bashkatov.pokerapi.model.room.dto.UserDto;
@@ -42,7 +43,8 @@ public class RoomController {
 
     @MessageMapping("/room/open-cards")
     @SendTo("/topic/room/open-cards")
-    public void openCards() {
+    public EmptyResponse openCards() {
+        return new EmptyResponse();
     }
 
     @MessageMapping("/room/my-score")
