@@ -13,6 +13,7 @@
 - /app/room/i-voted `{name}`
 - /app/room/open-cards `{name}`
 - /app/room/my-score `{name, score}`
+- /app/room/re-vote `{name}`
 
 ## generated events
 
@@ -27,3 +28,4 @@
 - /topic/room/i-voted `{name}`
 - /topic/room/open-cards `{name}`
 - /topic/room/my-score `{name, score}`
+- /topic/room/re-vote `{name}`

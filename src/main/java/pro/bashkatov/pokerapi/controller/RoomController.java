@@ -46,6 +46,12 @@ public class RoomController {
         return userDto;
     }
 
+    @MessageMapping("/room/re-vote")
+    @SendTo("/topic/room/re-vote")
+    public UserDto reVote(@Payload UserDto userDto) {
+        return userDto;
+    }
+
     @MessageMapping("/room/my-score")
     @SendTo("/topic/room/my-score")
     public ScoreDto openCards(@Payload ScoreDto scoreDto) {
