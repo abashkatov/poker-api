@@ -14,6 +14,7 @@
 - /app/room/open-cards `{name}`
 - /app/room/my-score `{name, score}`
 - /app/room/re-vote `{name}`
+- /app/room/new `{title}`
 
 ## generated events
 
@@ -29,3 +30,4 @@
 - /topic/room/open-cards `{name}`
 - /topic/room/my-score `{name, score}`
 - /topic/room/re-vote `{name}`
+- /topic/room/re-vote `{uuid,title}`
