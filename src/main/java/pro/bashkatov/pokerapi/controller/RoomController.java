@@ -5,16 +5,21 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import pro.bashkatov.pokerapi.model.room.dto.RoomDto;
+import pro.bashkatov.pokerapi.entity.Room;
 import pro.bashkatov.pokerapi.model.room.dto.RoomTopicDto;
 import pro.bashkatov.pokerapi.model.room.dto.ScoreDto;
 import pro.bashkatov.pokerapi.model.room.dto.UserDto;
-
-import java.util.UUID;
+import pro.bashkatov.pokerapi.repository.RoomRepository;
 
 @Controller
 @Slf4j
 public class RoomController {
+    private final RoomRepository roomRepository;
+
+    public RoomController(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
+
     @MessageMapping("/room/im-here")
     @SendTo("/topic/room/im-here")
     public UserDto imHere(@Payload UserDto userDto) {
@@ -65,8 +70,9 @@ public class RoomController {
 
     @MessageMapping("/room/new")
     @SendTo("/topic/room/created")
-    public RoomDto createRoom(@Payload RoomTopicDto topicDto) {
-        log.error("We are here");
-        return new RoomDto(UUID.randomUUID(), topicDto.getTitle());
+    public Room createRoom(@Payload RoomTopicDto topicDto) {
+        Room room = (new Room()).setTitle(topicDto.getTitle());
+        roomRepository.save(room);
+        return room;
     }
 }
