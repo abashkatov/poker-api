@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import pro.bashkatov.pokerapi.model.security.service.UserDetailServiceImp;
+import pro.bashkatov.pokerapi.model.security.service.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -15,7 +15,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
     private final UserDetailsService userDetailServiceImp;
 
-    public WebSecurityConfig(UserDetailServiceImp userDetailServiceImp) {
+    public WebSecurityConfig(UserService userDetailServiceImp) {
         this.userDetailServiceImp = userDetailServiceImp;
     }
 

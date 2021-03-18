@@ -15,10 +15,10 @@ import java.util.Map;
 @Service
 public class TokenProvider {
     private final static String key = "abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123";
-    private final UserDetailServiceImp userDetailService;
+    private final UserService userDetailService;
 
     public TokenProvider(
-            UserDetailServiceImp userDetailService
+            UserService userDetailService
     ) {
         this.userDetailService = userDetailService;
     }
