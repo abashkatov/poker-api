@@ -7,4 +7,5 @@ import pro.bashkatov.pokerapi.entity.User;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
     Long countByUsername(String username);
+    User findUserByUsername(String username);
 }
