@@ -36,7 +36,7 @@ public class TokenProvider {
         jwtBuilder.setExpiration(calendar.getTime());
         jwtBuilder.setClaims(tokenData);
 
-        return "Bearer " + jwtBuilder.signWith(SignatureAlgorithm.HS512, key).compact();
+        return jwtBuilder.signWith(SignatureAlgorithm.HS512, key).compact();
     }
 
     public Authentication getAuthenticationToken(String jwtToken) {

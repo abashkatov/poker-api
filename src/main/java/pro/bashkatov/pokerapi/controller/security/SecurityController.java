@@ -1,11 +1,14 @@
 package pro.bashkatov.pokerapi.controller.security;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pro.bashkatov.pokerapi.entity.User;
 import pro.bashkatov.pokerapi.model.chat.dto.MessageDto;
+import pro.bashkatov.pokerapi.model.room.dto.UserDto;
 import pro.bashkatov.pokerapi.model.security.dto.CredentialsDto;
 import pro.bashkatov.pokerapi.model.security.dto.UserTokenDto;
 import pro.bashkatov.pokerapi.model.security.service.TokenProvider;
@@ -31,7 +34,7 @@ public class SecurityController {
     @ResponseBody
     public UserTokenDto registration(@RequestBody CredentialsDto credentialsDto) {
         User user = new User(
-                credentialsDto.getLogin(),
+                credentialsDto.getUsername(),
                 bCryptPasswordEncoder.encode(credentialsDto.getPassword())
         );
         if(!userService.saveUser(user)) {
@@ -41,10 +44,24 @@ public class SecurityController {
         return new UserTokenDto(tokenProvider.getJwtToken(user));
     }
 
+    @ResponseBody
+    @PostMapping("/login")
+    public UserTokenDto login(@RequestBody CredentialsDto credentialsDto)  {
+        UserDetails user = userService.loadUserByUsername(credentialsDto.getUsername());
+        if(!bCryptPasswordEncoder.matches(
+            credentialsDto.getPassword(),
+            user.getPassword()
+        )) {
+            throw new BadCredentialsException("Bad credentials");
+        }
+
+        return new UserTokenDto(tokenProvider.getJwtToken((User)user));
+    }
+
     @GetMapping("/secure-endpoint")
     @ResponseBody
-    public MessageDto secureEndpoint() {
-        return new MessageDto("author", "message");
+    public UserDto secureEndpoint() {
+        return new UserDto("author");
     }
 
     @GetMapping("/unsecure-endpoint")
