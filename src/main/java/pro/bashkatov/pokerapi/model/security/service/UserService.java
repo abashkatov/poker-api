@@ -1,5 +1,6 @@
 package pro.bashkatov.pokerapi.model.security.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,6 +9,7 @@ import pro.bashkatov.pokerapi.entity.User;
 import pro.bashkatov.pokerapi.repository.UserRepository;
 
 @Service
+@Qualifier("userDetailService")
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 

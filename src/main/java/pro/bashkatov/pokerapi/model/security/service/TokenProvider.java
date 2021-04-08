@@ -2,9 +2,11 @@ package pro.bashkatov.pokerapi.model.security.service;
 
 import io.jsonwebtoken.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import pro.bashkatov.pokerapi.entity.User;
 
 import java.util.Calendar;
@@ -12,8 +14,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
-public class TokenProvider {
+@Component
+public class TokenProvider extends AbstractUserDetailsAuthenticationProvider {
     private final static String key = "abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc123";
     private final UserService userDetailService;
 
@@ -39,13 +41,12 @@ public class TokenProvider {
         return jwtBuilder.signWith(SignatureAlgorithm.HS512, key).compact();
     }
 
-    public Authentication getAuthenticationToken(String jwtToken) {
+    public JwtTokenAuthentication getAuthenticationToken(String jwtToken) {
         Jws<Claims> claims = getClaims(jwtToken);
         String username = (String) claims.getBody().get("username");
         UserDetails userDetails = userDetailService.loadUserByUsername(username);
-        return new UsernamePasswordAuthenticationToken(
-                userDetails, userDetails.getPassword(), userDetails.getAuthorities()
-        );
+
+        return new JwtTokenAuthentication(userDetails, userDetails.getAuthorities());
     }
 
     private Jws<Claims> getClaims(String token) {
@@ -56,5 +57,25 @@ public class TokenProvider {
             .build()
             .parseClaimsJws(token)
         ;
+    }
+
+    @Override
+    protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return (JwtTokenAuthentication.class.isAssignableFrom(authentication));
+    }
+
+    @Override
+    protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+        final Object token = authentication.getCredentials();
+        UserDetails userDetails = userDetailService.loadUserByUsername(username);
+        if(userDetails == null) {
+            throw new UsernameNotFoundException("Cannot find user with authentication token=" + token);
+        }
+        return userDetails;
     }
 }
