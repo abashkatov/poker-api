@@ -20,8 +20,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
                 .addEndpoint("/ws")
-                .setAllowedOriginPatterns("*")
+//                .setHandshakeHandler(new DefaultHandshakeHandler(new TomcatRequestUpgradeStrategy()))
+//                .setAllowedOriginPatterns("*")
                 .withSockJS()
+//                .setSessionCookieNeeded(false)
 //                .setWebSocketEnabled(true)
         ;
     }
