@@ -12,11 +12,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import pro.bashkatov.pokerapi.config.filter.TokenAuthenticationFilter;
 import pro.bashkatov.pokerapi.model.security.service.TokenProvider;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
@@ -42,13 +44,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .csrf().disable()
                 .headers().frameOptions().sameOrigin().and()
 //                .addFilterBefore(CorsFilter(), SessionManagementFilter.class)
-                .cors().disable()
-//                .cors().and()
+//                .cors().disable()
+                .cors().and()
 //                .cors().configurationSource(corsConfigurationSource()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .formLogin().disable()
                 .logout().disable()
                 .httpBasic().disable()
+                .headers().frameOptions().sameOrigin().and()
                 .authorizeRequests()
                     .antMatchers("/ws").permitAll()
                     .antMatchers("/registration").permitAll()
@@ -62,7 +65,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                     .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
         ;
     }
-
 
 //    @Bean
 //    CORSFilter CorsFilter() {

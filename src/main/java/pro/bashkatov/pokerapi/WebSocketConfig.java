@@ -21,10 +21,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry
                 .addEndpoint("/ws")
 //                .setHandshakeHandler(new DefaultHandshakeHandler(new TomcatRequestUpgradeStrategy()))
-//                .setAllowedOriginPatterns("*")
+                .setAllowedOriginPatterns("*")
                 .withSockJS()
-//                .setSessionCookieNeeded(false)
-//                .setWebSocketEnabled(true)
+                .setSessionCookieNeeded(false)
+                .setWebSocketEnabled(true)
         ;
     }
 

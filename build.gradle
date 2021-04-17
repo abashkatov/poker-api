@@ -17,15 +17,13 @@ configurations {
 
 repositories {
 	mavenCentral()
-	maven { url "http://repo.spring.io/libs-release" }
-	maven { url "http://repo.spring.io/libs-milestone" }
-	maven { url "http://repo.spring.io/libs-snapshot" }
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-messaging'
 	implementation 'org.springframework.security:spring-security-test'
 	compile 'org.mongodb:mongodb-driver-sync:4.0.5'
 	compileOnly 'org.projectlombok:lombok'
