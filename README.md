@@ -30,4 +30,4 @@
 - /topic/room/open-cards `{name}`
 - /topic/room/my-score `{name, score}`
 - /topic/room/re-vote `{name}`
-- /topic/room/re-vote `{id,title}`
+- /topic/room/created `{id,title}`

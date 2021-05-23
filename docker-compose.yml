@@ -14,6 +14,7 @@ services:
   nginx:
     image: nginx
     container_name: poker.nginx
+    restart: always
     ports:
       - 8080:80
     links:
